@@ -77,7 +77,7 @@ app.engine('.hbs', expressBars({
     defaultLayout:false
 }));
 
-app.set('view engine', 'hbs');
+app.set('views engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'))
 
 
