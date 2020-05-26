@@ -63,7 +63,7 @@ app.post('/register', (req,res)=>{
 
 
 app.get('/video', function(req, res) {
-    const path = 'assets/sample.mp4'
+    const path = 'https://www.youtube.com/watch?v=atz_aZA3rf0'
     const stat = fs.statSync(path)
     const fileSize = stat.size
     const range = req.headers.range
