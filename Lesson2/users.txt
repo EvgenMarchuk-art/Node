@@ -1,0 +1,5 @@
+ {"name":"Dima","age":22,"email":"dima@mail.com","password":"12345a"}
+ {"name":"Vova","age":44,"email":"vova@mail.com","password":"12345a"}
+{"name":"tred","age":"44","email":"tred@hyt.com","password":"09876"}
+
+{"name":"67","age":"34","email":"vova@mail.com","password":"0-9876"}

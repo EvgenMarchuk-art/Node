@@ -52,24 +52,36 @@
 const express = require('express');
 const expressBars = require('express-handlebars');
 const path = require('path');
+const {createUser, getUsers} = require('./Services/user.service')
+
+
+
+
 
 const app = express();
 
 const users = [
     {
         name: "Dima",
-        age:22
+        age:22,
+        email:"dima@mail.com",
+        password:"12345a"
     },
     {
         name: "Vova",
-        age:44
+        age:44,
+        email:"vova@mail.com",
+        password:"12345a"
     },
 ]
 
 //когда нет фронта
-app.use(express.static(path.join(__dirname,'views')));
+
 app.use(express.json());
 app.use(express.urlencoded());
+
+app.use(express.static(path.join(__dirname,'views')));
+
 
 
 app.engine('.hbs', expressBars({
@@ -83,10 +95,12 @@ app.set('views', path.join(__dirname, 'views'))
 
 
 app.get('/', ( req,res ) =>{
-    res.render('main', {name:'Viktor', showed:false})
+
+    res.render('main', {name:'Viktor', showed:true})
 })
 
-app.get('/users', ( req,res ) =>{
+
+app.get('/users', async ( req,res ) =>{
 //
 //
 //     // res.write('HELLO WORLD !')
@@ -98,20 +112,46 @@ app.get('/users', ( req,res ) =>{
 //     // res.end()
 //
 //     res.json('hello json')
+    const users = await getUsers();
+
+
+
     res.render('users', {users})
 })
 
 
+app.get('/register', (req,res)=>{
 
-
-app.get('/register',(req,res)=>{
     res.render('register')
 })
 
-app.post('/reg', (req,res)=>{
-    console.log(req.body);
+app.get('/login',(req,res)=>{
+    res.render('login')
+})
 
-    res.end()
+app.post('/auth', (req,res)=>{
+
+    const{email, password} = req.body;
+    const user = users.find(user =>user.email === email);
+
+
+    if(!user){
+       return res.render('error', { message:'User not found'})
+    }
+
+    //haash password ->hasg string
+
+    if(user.password !== password){
+        return res.render('error', { message:'User not found'})
+    }
+
+    res.json({email, name: user.name});
+})
+
+app.post('/reg', async (req,res)=>{
+    await createUser(req.body);
+
+    res.redirect('/users')
 })
 
 
