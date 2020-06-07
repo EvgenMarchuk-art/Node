@@ -1,6 +1,6 @@
 const  Joi = require('joi');
 const userValidationSchema = require('../../validators/User/new-user.validator')
-const ErrorHandler = require('../../errors/ErrorHandler')
+const ErrorHandler = require('../../error/ErrorHandler')
 
 module.exports = (req, res, next) => {
 

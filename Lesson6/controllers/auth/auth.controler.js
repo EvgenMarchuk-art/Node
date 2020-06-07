@@ -1,6 +1,7 @@
 const {authService, userService} = require('../../service');
-const {tokinizer, checkHashPassword } = require('../../helpers')
-const ErrorHandler = require('../../errors/ErrorHandler')
+const {tokinizer, checkHashPassword } = require('../../helpers');
+const {ErrorHandler, error}= require('../../error');
+const {requestHeadersEnum, responseStatusCodesEnum} = require('../../constants')
 
 module.exports = {
 
@@ -34,13 +35,41 @@ module.exports = {
     },
 
     logoutUser: async (req,res, ) => {
-        const access_token = req.get('Authorization');
+        const access_token = req.get(requestHeadersEnum.AUTHORIZATION);
 
 
         await authService.deleteByParams({access_token});
 
         res.sendStatus(200);
 
+    },
+    refreshToken: async (req,res, next) => {
+
+        try {
+            const refresh_token = req.get(requestHeadersEnum.AUTHORIZATION);
+            const userId = req.userId;
+
+            const user = await  userService.getUserById(userId);
+
+            if(!user){
+                return next(new ErrorHandler(error.NOT_FOUND.message, responseStatusCodesEnum.NOT_FOUND, error.NOT_FOUND.code)
+                )
+            }
+
+            const tokens = tokinizer();
+
+            await authService.deleteByParams({refresh_token});
+            await authService.createTokenPair(tokens);
+
+            res.json(tokens);
+
+        }catch (e) {
+            next(e)
+        }
+
+
     }
+
+
 
 };

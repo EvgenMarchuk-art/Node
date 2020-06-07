@@ -1,21 +1,22 @@
 const jwt = require('jsonwebtoken');
+
 const {
-    wordsEnum: {JTW_SECRET},
-    responseStatusCodesEnum,
-    requestHeadersEnum
+    wordsEnum: {JTW_REFRESH_SECRET},
+    responseStatusCodesEnum
 } = require('../../constants');
+
 const {authService} = require('../../service');
 const {error, ErrorHandler} = require('../../error');
 
 module.exports = async (req, res, next) => {
     try {
-        const token = req.get(requestHeadersEnum.AUTHORIZATION);
+        const token = req.get('Authorization');
 
         if (!token) {
             return next(new ErrorHandler('Not  token', 400, 4002));
         }
 
-        jwt.verify(token, JTW_SECRET, err => {
+        jwt.verify(token, JTW_REFRESH_SECRET, err => {
 
             if (err) {
                 return next(
@@ -29,7 +30,7 @@ module.exports = async (req, res, next) => {
         });
 
 
-        const tokensFromDB = await authService.getTokensByParams({access_token: token})
+        const tokensFromDB = await authService.getTokensByParams({refresh_token: token})
 
         if (!tokensFromDB) {
             return next(

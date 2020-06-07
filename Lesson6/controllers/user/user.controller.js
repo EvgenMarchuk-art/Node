@@ -1,6 +1,6 @@
 const {userService} = require('../../service');
 const {hashPassword, checkHashPassword} = require('../../helpers');
-const ErrorHandler = require('../../errors/ErrorHandler')
+const ErrorHandler = require('../../error/ErrorHandler')
 
 module.exports = {
     getAllUsers: async (req, res) => {
