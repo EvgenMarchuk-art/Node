@@ -24,10 +24,6 @@ module.exports = (sequelize, DataTypes) => {
             timestamps: false
         })
 
-    const User = sequelize.import('./User.js');
-
-    Token.belongsTo(User, {foreignKey: 'userId'})
-
 
     return Product;
 };
