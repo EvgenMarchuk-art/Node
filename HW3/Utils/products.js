@@ -1,7 +1,7 @@
 const path = require('path');
 const fsp = require('fs').promises;
 
-const pathToProducts = path.join(process.cwd(),'data', 'products.json');
+const pathToProducts = path.join(process.cwd(),'data', 'product.json');
 
 
 async function getProductsFile() {
