@@ -1,3 +1,6 @@
+// getUsers
+// createUser
+
 const db = require('../dataBase').getInstance();
 
 module.exports = {

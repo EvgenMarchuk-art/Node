@@ -15,9 +15,8 @@ module.exports = (sequelize, DataTypes) => {
             },
             discount: {
                 type: DataTypes.BOOLEAN,
-                defaultValue:false
+                defaultValue: false
             }
-
         },
         {
             tableName: 'product',

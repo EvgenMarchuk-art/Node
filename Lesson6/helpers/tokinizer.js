@@ -1,4 +1,3 @@
-
 const jwt = require('jsonwebtoken');
 
 const {wordsEnum: {JTW_REFRESH_SECRET, JTW_SECRET}} = require('../constants');

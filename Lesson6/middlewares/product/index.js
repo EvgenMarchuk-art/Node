@@ -1,1 +1,1 @@
-module.exports.checkIsProductsExists = require('./check-is-product-exists.middleware');
+module.exports.checkIsProductsExists = require('./check-is-product-exists.meddleware');

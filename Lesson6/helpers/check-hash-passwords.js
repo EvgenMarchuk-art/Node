@@ -1,19 +1,13 @@
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt')
 
-module.exports= async (hashedPassword, password)=>{
+module.exports = async (hashedPassword, password) => {
+    const isPasswordsEquals = await bcrypt.compare(password, hashedPassword);
 
-    const isPasswordEguals = await bcrypt.compare(password,hashedPassword);
+    console.log('*************************************');
+    console.log(isPasswordsEquals);
+    console.log('*************************************');
 
-    console.log('***********')
-    console.log(isPasswordEguals)
-    console.log('***********')
-
-    if(!isPasswordEguals){
-
-        throw new Error('User is not exists');
-
-
+    if (!isPasswordsEquals) {
+        throw new Error('User is not exist');
     }
-
-
 }
