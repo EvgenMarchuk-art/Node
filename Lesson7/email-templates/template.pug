@@ -1,12 +1,14 @@
 doctype html
 html
     head
-
-        body
-            div
-                block content
-                    div
-                        | Best regards,
-                        br
-                        | Nude team
-                        a(href='google.com') OUR WEBSITE
+        style
+            include style.css
+    body
+        div
+            block content
+            div.footer
+                | Best regards,
+                br
+                | Nude team
+                br
+                a(href=frontendUrl) OUR WEBSITE

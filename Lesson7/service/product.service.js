@@ -1,7 +1,5 @@
 const db = require('../dataBase').getInstance();
-const {modelNamesEnum:{PRODUCT}} = require('../constants')
-
-
+const {modelNamesEnum: {PRODUCT}} = require('../constants')
 
 module.exports = {
     getAllProducts: () => {
@@ -16,19 +14,17 @@ module.exports = {
         return ProductModel.findByPk(id)
     },
 
-    deleteByParams:(params) => {
+    deleteByParams: (params) => {
         const ProductModel = db.getModel(PRODUCT);
 
         return ProductModel.destroy({
-            where:params
+            where: params
         })
     },
-
 
     createProduct: (product) => {
         const ProductModel = db.getModel(PRODUCT);
 
         return ProductModel.create(product);
-
     }
 };

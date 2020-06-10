@@ -1,24 +1,21 @@
-const  Joi = require('joi');
-const userValidationSchema = require('../../validators/User/new-user.validator')
-const ErrorHandler = require('../../errors/ErrorHandler')
+const Joi = require('joi');
+
+const userValidationSchema = require('../../validators/user/new-user.validator');
+const ErrorHandler = require('../../errors/ErrorHandler');
 
 module.exports = (req, res, next) => {
-
-  try {
+    try {
         const user = req.body;
 
-        const {error}= Joi.validate(user,userValidationSchema)
+        const {error} = Joi.validate(user, userValidationSchema)
 
-      if(error){
-          return next(new ErrorHandler(error.details[0].message, 400))
-      }
+        if (error) {
+            return next(new ErrorHandler(error.details[0].message, 400))
+        }
 
+        next();
 
-
-      next();
-              } catch (e) {
-                      res.render('error',{message: e.message})
-
-  }
-
+    } catch (e) {
+        res.render('error', {message: e.message})
+    }
 }

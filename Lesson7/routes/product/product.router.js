@@ -1,21 +1,18 @@
 const {Router} = require('express');
 
-const {productController} = require('../../controllers');
+const {productController} = require('../../controllers')
+const {productMiddleware}= require('../../middlewares')
 
-const {productMiddleware} = require('../../middlewares')
 
 const productRouter = Router();
 
+productRouter.get('/', productController.getAllProducts);
 
-
-
-productRouter.get( '/', productController.getAllProducts);
-
-productRouter.use('/:productId', productMiddleware.checkIsProductsExists );
-
+productRouter.use('/:productId',
+    productMiddleware.checkUserValidity
+    );
 productRouter.get('/:productId', productController.getById)
-productRouter.delete('/:productId', productController.deleteProduct);
-
+productRouter.delete('/:productId', productController.deleteProduct)
 
 
 module.exports = productRouter;

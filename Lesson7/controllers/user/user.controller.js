@@ -1,17 +1,13 @@
-const {emailService, userService} = require('../../service');
-const {hashPassword, checkHashPassword} = require('../../helpers');
+const {emailActionEnum} = require('../../constants')
+const {emailService, userService} = require('../../service')
+const {hashPassword, checkHashPassword} = require('../../helpers')
 const ErrorHandler = require('../../errors/ErrorHandler')
 
 module.exports = {
     getAllUsers: async (req, res) => {
-        let users = await userService.getUsers();
+        let products = await userService.getUsers();
 
-        res.json(users)
-        // res.render('users', {users})
-    },
-
-    updateUser: (req, res) => {
-        res.end('PUT users')
+        res.json(products)
     },
 
     deleteUser: (req, res) => {
@@ -25,13 +21,15 @@ module.exports = {
         try {
             const user = req.body;
             const hashedPassword = await hashPassword(user.password)
-            console.log( hashedPassword )
+
             user.password = hashedPassword;
 
-
             await userService.createUser(user);
-            await emailService.sendMail(user.email)
-
+            await emailService.sendMail(
+                user.email,
+                emailActionEnum.USER_REGISTER,
+                {userName: user.name}
+            )
         } catch (e) {
             res.json(e)
         }
@@ -39,28 +37,18 @@ module.exports = {
         res.end()
     },
 
-    loginUser: async (req, res,next) => {
+    loginUser: async (req, res, next) => {
 
-
-        const {email, password} = req.body
+        const {email, password} = req.body;
 
         const user = await userService.getUserByParams({email});
 
         if (!user) {
-            return next (new ErrorHandler('User is not found', 404, 4041)) ;
-
+            return next(new ErrorHandler('User is not found', 404, 4041));
         }
 
         await checkHashPassword(user.password, password);
 
         res.json(user);
-    //    try {
-    //
-    //
-    // } catch(e) {
-    //
-    //     next(e)
-    //
-    //     }
     }
 };

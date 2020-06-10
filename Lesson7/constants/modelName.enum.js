@@ -1,4 +1,4 @@
-module.exports={
-    PRODUCT:'Product',
-    USER:'User'
+module.exports = {
+    PRODUCT: 'Product',
+    USER: 'User'
 }
