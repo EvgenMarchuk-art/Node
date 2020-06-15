@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-const {PORT} = require('./configs');
+
 const express = require('express');
 const morgan = require('morgan');
 
@@ -16,7 +16,7 @@ app.use(express.urlencoded());
 
 const router = require('./routes');
 
-
+const {PORT} = require('./configs');
 app.use(router);
 
 

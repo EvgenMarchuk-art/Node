@@ -4,6 +4,7 @@ const {productController} = require('../../controllers');
 const {
     productMiddlewares: {isProductValid, isProductExist},
     authMiddlewares: {checkAccessToken}
+
 } = require('../../middlewares');
 
 
