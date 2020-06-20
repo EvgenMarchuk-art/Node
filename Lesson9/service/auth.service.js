@@ -1,16 +1,23 @@
 const db = require('../dataBase').getInstance();
 
 module.exports = {
-    getTokensByParams: (params) => {
+    getTokensByParams: async (params) => {
         const TokenModel = db.getModel('Token');
         const UserModel = db.getModel('User');
 
-        return TokenModel.findOne({
+        const userFormToken = await TokenModel.findOne({
             where: params,
-            include:[
-                UserModel
-            ]
+            attributes: [],
+            include: [{
+                model: UserModel,
+                as: 'user',
+                attributes: ['id', 'name', 'email']
+            }],
+            raw: true,
+            nest: true
         })
+
+        return userFormToken;
     },
 
     deleteByParams: (params) => {

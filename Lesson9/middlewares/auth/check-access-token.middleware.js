@@ -28,8 +28,6 @@ module.exports = async (req, res, next) => {
 
         const tokensFromDB = await authService.getTokensByParams({access_token: token})
 
-        console.log(tokensFromDB);
-
         if (!tokensFromDB) {
             return next(new ErrorHandler(
                 error.NOT_VALID_TOKEN.message,
@@ -38,7 +36,7 @@ module.exports = async (req, res, next) => {
             ));
         }
 
-        req.userId = tokensFromDB.userId
+        req.user = tokensFromDB.user
         next()
     } catch (e) {
         next(e)

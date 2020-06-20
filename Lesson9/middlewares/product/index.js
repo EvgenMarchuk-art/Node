@@ -1,0 +1,1 @@
+module.exports.checkUserValidity  = require('./check-is-product-exists.middleware');

@@ -1,38 +1,38 @@
 module.exports = (sequelize, DataTypes) => {
-    const Token = sequelize.define('Token', {
+    const User = sequelize.define('User', {
             id: {
                 type: DataTypes.INTEGER,
                 primaryKey: true,
                 autoIncrement: true
             },
-            userId: {
-                type: DataTypes.INTEGER,
+            email: {
+                type: DataTypes.STRING,
+                unique: true,
                 allowNull: false
             },
-            access_token: {
+            name: {
                 type: DataTypes.STRING,
                 allowNull: false
             },
-            refresh_token: {
+            password: {
                 type: DataTypes.STRING,
                 allowNull: false
             },
-        createdAd:{
-            type: DataTypes.DATE,
-            defaultValue:sequelize.fn('now')
-        }
+            photo: {
+                type: DataTypes.STRING,
 
+            }
+            // ,
+            // create_at: {
+            //     type: DataTypes.DATE,
+            //     defaultValue: sequelize.fn('now')
+            // }
         },
-
-
         {
-            tableName: 'token',
+            tableName: 'users',
             timestamps: false
         })
 
-    const User = sequelize.import('./User.js');
 
-    Token.belongsTo(User, {foreignKey:'userId'})
-
-    return Token;
+    return User;
 };
